@@ -2905,6 +2905,33 @@
         }
       }
     },
+    "CreateSessionOutput": {
+      "type": "structure",
+      "required": ["Credentials"],
+      "members": {
+        "Credentials": {
+          "shape": "SessionCredentials",
+          "locationName": "Credentials"
+        }
+      }
+    },
+    "CreateSessionRequest": {
+      "type": "structure",
+      "required": ["Bucket"],
+      "members": {
+        "SessionMode": {
+          "shape": "SessionMode",
+          "location": "header",
+          "locationName": "x-amz-create-session-mode"
+        },
+        "Bucket": {
+          "shape": "BucketName",
+          "contextParam": {"name": "Bucket"},
+          "location": "uri",
+          "locationName": "Bucket"
+        }
+      }
+    },
     "CreationDate": {
       "type": "timestamp"
     },
@@ -9854,6 +9881,45 @@
         "shape": "ServerSideEncryptionRule"
       },
       "flattened": true
+    },
+    "SessionCredentialValue": {
+      "type": "string",
+      "sensitive": true
+    },
+    "SessionCredentials": {
+      "type": "structure",
+      "required": [
+        "AccessKeyId",
+        "SecretAccessKey",
+        "SessionToken",
+        "Expiration"
+      ],
+      "members": {
+        "AccessKeyId": {
+          "shape": "AccessKeyIdValue",
+          "locationName": "AccessKeyId"
+        },
+        "SecretAccessKey": {
+          "shape": "SessionCredentialValue",
+          "locationName": "SecretAccessKey"
+        },
+        "SessionToken": {
+          "shape": "SessionCredentialValue",
+          "locationName": "SessionToken"
+        },
+        "Expiration": {
+          "shape": "SessionExpiration",
+          "locationName": "Expiration"
+        }
+      }
+    },
+    "SessionExpiration": {"type": "timestamp"},
+    "SessionMode": {
+      "type": "string",
+      "enum": [
+        "ReadOnly",
+        "ReadWrite"
+      ]
     },
     "Setting": {
       "type": "boolean"
